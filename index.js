@@ -63,7 +63,7 @@ app.post("/postmessage", async function (req, res) {
 
   const nowDate = new Date();
   let collection = db.collection("MessageBoard");
-  result = await collection.insertOne({ InputName: InputName, InputMessage: InputMessage, CDTM: nowDate });
+  result = await collection.insertOne({ Name: InputName, Message: InputMessage, CDTM: nowDate });
   res.redirect("/");
 });
 
