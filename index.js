@@ -43,20 +43,30 @@ async function initDB() {
 initDB().catch(console.error); // 初始化資料庫
 
 
-
 app.get("/", async function (req, res) {
   try {
     const collection = db.collection("MessageBoard");
-    const result = await collection.findOne({ name: "Lin" });
+    const result = await collection.find({}).sort({ CDTM: -1 }).toArray();;
     if (result !== null) {
       console.log(result);
     }
-    res.render("index.ejs");
+    res.render("index.ejs", { result: result });
   } catch (error) {
     console.error("查詢資料庫時出錯:", error);
     res.status(500).send("查詢資料庫時出錯");
   }
 });
+
+app.post("/postmessage", async function (req, res) {
+  const InputName = req.body.InputName;
+  const InputMessage = req.body.InputMessage;
+
+  const nowDate = new Date();
+  let collection = db.collection("MessageBoard");
+  result = await collection.insertOne({ InputName: InputName, InputMessage: InputMessage, CDTM: nowDate });
+  res.redirect("/");
+});
+
 
 // 當應用程式結束時關閉資料庫連線
 process.on('SIGINT', async () => {
