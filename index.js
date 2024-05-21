@@ -12,7 +12,7 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.static("public"));//管理靜態檔案
 app.use(express.urlencoded({ extended: true }));//接受前端post
-app.listen(process.env.PORT, function () {
+app.listen(3000, function () {
   console.log("Server Started");
 });
 
